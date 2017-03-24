@@ -1,7 +1,7 @@
 #! python3
 '''
 Created on Mar 24, 2017
-
+Finds files over a specified file size in the chosen path
 @author: dalton
 '''
 
@@ -19,6 +19,7 @@ def convert_byte_to_human(convert_size):
             return str(round(size, 2)) + ' ' + ending
         size /= 1024
 
+        
 def convert_human_to_byte(convert_size):
     # Converts human-readable format to bytes
     endings = ['B','KB','MB','GB','TB','PB','EB','ZB']
