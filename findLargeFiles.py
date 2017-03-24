@@ -24,16 +24,18 @@ def convert_human_to_byte(convert_size):
     # Converts human-readable format to bytes
     endings = ['B','KB','MB','GB','TB','PB','EB','ZB']
     
-    if convert_size.isdigit():
-        return convert_size
+    try:
+        return float(convert_size.replace(',',''))
+    except ValueError:
+        pass
     
-    split_size = re.match(r'(\d+)\s?(\w+)', convert_size)
+    split_size = re.match(r'(\d+,?\d*\.?\d*)\s?(\w+)', convert_size)
     if split_size == None:
         raise Exception('Use standard format (e.g. 123 MB, 40kb, 1000B)')
-    split_number = split_size.group(1)
+    split_number = split_size.group(1).replace(',','')
     split_ending = split_size.group(2).upper()
     
-    return int(split_number) * pow(1024, endings.index(split_ending))
+    return float(split_number) * pow(1024, endings.index(split_ending))
             
 
 def find_files(user_path, minimum_size):
