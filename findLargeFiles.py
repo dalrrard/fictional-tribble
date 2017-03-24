@@ -28,6 +28,8 @@ def convert_human_to_byte(convert_size):
         return convert_size
     
     split_size = re.match(r'(\d+)\s?(\w+)', convert_size)
+    if split_size == None:
+        raise Exception('Use standard format (e.g. 123 MB, 40kb, 1000B)')
     split_number = split_size.group(1)
     split_ending = split_size.group(2).upper()
     
@@ -37,7 +39,8 @@ def convert_human_to_byte(convert_size):
 def find_files(user_path, minimum_size):
     # Make sure that user_path is absolute path
     user_path = os.path.abspath(user_path)
-    
+    if not os.path.isdir(user_path):
+        raise Exception('Filepath invalid')
     # Walks specified file path and prints files larger than the minimum size
     for folder_names, _, file_names in os.walk(user_path):
         for file in file_names:
@@ -49,7 +52,11 @@ def find_files(user_path, minimum_size):
                 pass
     print('Search complete.')
 
-filepath = input('Enter a filepath: ')
-filesize = input('Enter a filesize: (ex. 400 MB) ')
 
-find_files(filepath, convert_human_to_byte(filesize))
+try:
+    filepath = input('Enter a filepath: ')
+    filesize = input('Enter a filesize: (ex. 400 MB) ')
+    
+    find_files(filepath, convert_human_to_byte(filesize))
+except Exception as err:
+    print('An exception has happened: {0!s}'.format(err))
