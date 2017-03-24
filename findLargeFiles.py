@@ -21,17 +21,17 @@ def convert_byte_to_human(convert_size):
 
 def convert_human_to_byte(convert_size):
     # Converts human-readable format to bytes
-    endings = [' B','KB','MB','GB','TB','PB','EB','ZB']
+    endings = ['B','KB','MB','GB','TB','PB','EB','ZB']
     
     if convert_size.isdigit():
         return convert_size
     
-    split_size = re.match(r'(\d+) (\w+)', convert_size)
+    split_size = re.match(r'(\d+)\s?(\w+)', convert_size)
     split_number = split_size.group(1)
-    split_ending = split_size.group(2)
+    split_ending = split_size.group(2).upper()
     
     for i in range(len(endings)):
-        if convert_size.endswith(endings[i]):
+        if split_ending == endings[i]:
             return int(split_number) * pow(1024, i)
             
 
@@ -50,7 +50,7 @@ def find_files(user_path, minimum_size):
                 pass
     print('Search complete.')
 
-
 filepath = input('Enter a filepath: ')
 filesize = input('Enter a filesize: (ex. 400 MB) ')
+
 find_files(filepath, convert_human_to_byte(filesize))
