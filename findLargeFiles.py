@@ -39,7 +39,7 @@ def find_files(user_path, minimum_size):
     user_path = os.path.abspath(user_path)
     
     # Walks specified file path and prints files larger than the minimum size
-    for folder_names, subfolders, file_names in os.walk(user_path):
+    for folder_names, _, file_names in os.walk(user_path):
         for file in file_names:
             try:
                 file_size = os.path.getsize(os.path.join(folder_names,file))
