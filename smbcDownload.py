@@ -6,7 +6,7 @@ import os
 import bs4
 import mimetypes
 
-url = 'http://www.smbc-comics.com/comic/2013-04-24'
+url = 'http://www.smbc-comics.com/comic/password'
 os.makedirs('smbc', exist_ok=True)
 while True:
     # Download the page.
@@ -47,10 +47,10 @@ while True:
     imageFile.close()
 
     # Get the Prev button's url
-    prevLink = soup.select('a[rel="prev"]')[0]
-    url = prevLink.get('href')
-
-    if not url:
+    try:
+        prevLink = soup.select('a[rel="prev"]')[0]
+        url = prevLink.get('href')
+    except IndexError:
         break
 
 print('Done.')
